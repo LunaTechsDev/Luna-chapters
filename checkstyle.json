@@ -1,0 +1,103 @@
+{
+  "defaultSeverity": "INFO",
+  "checks": [
+    {
+      "type": "UnusedLocalVar"
+    },
+    {
+      "type": "UnusedImport",
+      "props": {
+        "severity": "WARNING"
+      }
+    },
+    {
+      "type": "SimplifyBooleanExpression",
+      "props": {
+        "severity": "ERROR"
+      }
+    },
+    {
+      "type": "SimplifyBooleanReturn",
+      "props": {
+        "severity": "ERROR"
+      }
+    },
+    {
+      "type": "NeedBraces",
+      "props": {
+        "severity": "WARNING",
+        "allowSingleLineStatement": false,
+        "tokens": [
+          "FOR",
+          "IF",
+          "ELSE_IF",
+          "WHILE",
+          "DO_WHILE"
+        ]
+      }
+    },
+    {
+      "type": "EmptyLines",
+      "props": {
+        "max": 1,
+        "allowEmptyLineAfterSingleLineComment": false,
+        "requireEmptyLineAfterClass": false,
+        "requireEmptyLineAfterPackage": true,
+        "requireEmptyLineAfterAbstract": false,
+        "requireEmptyLineAfterInterface": false
+      }
+    },
+    {
+      "type": "FileLength",
+      "props": {
+        "severity": "WARNING",
+        "max": 1000
+      }
+    },
+    {
+      "type": "IndentationCharacter",
+      "props": {
+        "character": "space"
+      }
+    },
+    {
+      "type": "WhitespaceAround",
+      "props": {
+        "tokens": [
+          "=",
+          "+",
+          "-",
+          "*",
+          "/",
+          "%",
+          ">",
+          "<",
+          ">=",
+          "<=",
+          "==",
+          "!=",
+          "&",
+          "|",
+          "^",
+          "&&",
+          "||",
+          "<<",
+          ">>",
+          ">>>",
+          "+=",
+          "-=",
+          "*=",
+          "/=",
+          "%=",
+          "<<=",
+          ">>=",
+          ">>>=",
+          "|=",
+          "&=",
+          "^=",
+          "=>"
+        ]
+      }
+    }
+  ]
+}

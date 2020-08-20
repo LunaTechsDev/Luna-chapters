@@ -1,0 +1,37 @@
+{
+  "name": "lunarbase",
+  "version": "1.0.0",
+  "description": "A base project for creating tools and plugins for RPGMakerMV/MZ.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "nodemon --watch src -e hx,hxml,xml --exec haxe compile.hxml"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LunaTechsDev/LunarBase.git"
+  },
+  "keywords": [
+    "lunarbase",
+    "lunartea",
+    "rpgmaker",
+    "rpgmakermv",
+    "rpgmakermz",
+    "rmmv",
+    "rmmz"
+  ],
+  "author": "Kino, Waynee, LTN",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LunaTechsDev/LunarBase/issues"
+  },
+  "homepage": "https://github.com/LunaTechsDev/LunarBase#readme",
+  "dependencies": {
+    "nodemon": "^2.0.4",
+    "lix": "^15.9.0"
+  },
+  "execMap": {
+    "hxml": "haxe",
+    "hx": "haxe"
+  }
+}
