@@ -1,3 +1,5 @@
+package scenes;
+
 import js.html.Console;
 import utils.Fn;
 import rm.core.Sprite;
