@@ -16,7 +16,7 @@ class DataManager {
   Fn.setField(RmDataManager, 'saveGame', (savefileId) -> {
     var saveName = RmDataManager.makeSavename(savefileId);
     Chapters.Emitter.emit('game-saved', saveName);
-   oldSaveGame.call(Fn.self);
+   oldSaveGame.call(Fn.self, savefileId);
   });
  }
 }
