@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"group": "build",
+			"label": "lix: compile.hxml",
+			"command": "lix",
+			"args": ["compile.hxml"]
+		}
+	]
+}
