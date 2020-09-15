@@ -235,25 +235,25 @@
 /*~struct~ItemWindow:
  * @param x
  * @text X Position
- * @type text
+ * @type note
  * @desc The position of the window on the x axis (Eval allowed)
  * @default 0
  *
  * @param y
  * @text Y Position
- * @type text
+ * @type note
  * @desc The position of the window on the y axis (Eval allowed)
  * @default 0
  *
  * @param width
  * @text Width
- * @type text
+ * @type note
  * @desc The width of the window (Eval allowed)
  * @default 400
  *
  * @param height
  * @text Height
- * @type text
+ * @type note
  * @desc The height of the window (Eval allowed)
  * @default 400
  *
@@ -280,25 +280,25 @@
 /*~struct~BasicWindow:
  * @param x
  * @text X Position
- * @type text
+ * @type note
  * @desc The position of the window on the x axis (Eval allowed)
  * @default 0
  *
  * @param y
  * @text Y Position
- * @type text
+ * @type note
  * @desc The position of the window on the y axis (Eval allowed)
  * @default 0
  *
  * @param width
  * @text Width
- * @type text
+ * @type note
  * @desc The width of the window (Eval allowed)
  * @default 400
  *
  * @param height
  * @text Height
- * @type text
+ * @type note
  * @desc The height of the window (Eval allowed)
  * @default 400
  *
