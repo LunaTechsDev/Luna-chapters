@@ -1,13 +1,15 @@
 package scenes;
 
+import rm.core.Rectangle;
 import js.html.Console;
 import utils.Fn;
 import rm.core.Sprite;
 import types.Chapter;
+import rm.Globals.GameSystem;
 import rm.Globals.GameSwitches;
 import rm.Globals.GameVariables;
 import rm.Globals.GamePlayer;
-import rm.core.Graphics;
+import rm.Globals.DataSystem;
 import rm.windows.Window_SavefileList;
 import rm.scenes.Scene_MenuBase;
 import rm.scenes.Scene_Map;
@@ -19,9 +21,10 @@ import windows.Window_ChapterList;
 import windows.Window_ChapterSummary;
 import windows.Window_ChapterThumbnail;
 
+@:keep()
 class Scene_Chapters extends Scene_MenuBase {
- private var _scelectedChapter: Int = 0;
- private var _loadSuccess: Bool = false;
+ private var _scelectedChapter: Int;
+ private var _loadSuccess: Bool;
  private var _saveFileList: Window_SavefileList;
  private var _thumbnailWindow: Window_ChapterThumbnail;
  private var _chapterSelectWindow: Window_ChapterList;
@@ -31,6 +34,8 @@ class Scene_Chapters extends Scene_MenuBase {
 
  public function new() {
   super();
+  _scelectedChapter = 0;
+  _loadSuccess = false;
   super.initialize();
  }
 
@@ -39,10 +44,10 @@ class Scene_Chapters extends Scene_MenuBase {
   createChapterBackground();
   createWindowLayer();
   createHelpWindow();
-  createSaveFileList();
   createChapterSelect();
   createChapterThumbnail();
   createChapterSummary();
+  createSaveFileList();
  }
 
  public override function start() {
@@ -65,6 +70,14 @@ class Scene_Chapters extends Scene_MenuBase {
   }
  }
 
+ public override function isBottomHelpMode() {
+  return false;
+ };
+
+ public override function isBottomButtonMode() {
+  return true;
+ };
+
  public function createChapterBackground() {
   _chapterBackground = new Sprite();
   addChild(_chapterBackground);
@@ -73,9 +86,10 @@ class Scene_Chapters extends Scene_MenuBase {
  public function createChapterSelect() {
   var width = _tryEval(Params.chapterWindow.width);
   var height = _tryEval(Params.chapterWindow.height);
-  var y: Int = Math.round(_tryEval(Params.chapterWindow.y));
+  var y = _tryEval(Params.chapterWindow.y);
+  var rect = new Rectangle(0, y, width, height);
 
-  _chapterSelectWindow = new Window_ChapterList(0, y, width, height);
+  _chapterSelectWindow = new Window_ChapterList(rect);
   _chapterSelectWindow.setHandler('ok', onChapterSelect);
   _chapterSelectWindow.setHandler('cancel', popScene);
   _chapterSelectWindow.close();
@@ -89,7 +103,9 @@ class Scene_Chapters extends Scene_MenuBase {
   var y = _tryEval(options.y);
   var x = _tryEval(options.x);
 
-  _thumbnailWindow = new Window_ChapterThumbnail(x, y, width, height);
+  var rect = new Rectangle(x, y, width, height);
+
+  _thumbnailWindow = new Window_ChapterThumbnail(rect);
   _thumbnailWindow.close();
   addWindow(_thumbnailWindow);
  }
@@ -101,20 +117,25 @@ class Scene_Chapters extends Scene_MenuBase {
   var y = _tryEval(options.y);
   var x = _tryEval(options.x);
 
-  _summaryWindow = new Window_ChapterSummary(x, y, width, height);
+  var rect = new Rectangle(x, y, width, height);
+
+  _summaryWindow = new Window_ChapterSummary(rect);
   _summaryWindow.close();
   addWindow(_summaryWindow);
  }
 
  public function createSaveFileList() {
-  var width = Math.round(Graphics.width);
-  var height = Math.round(Graphics.height - _helpWindow.height);
-  var y = Math.round(_helpWindow.height);
+  var uiAreaWidth = DataSystem.advanced.uiAreaWidth;
+  var uiAreaHeight = DataSystem.advanced.uiAreaHeight;
+  var height = uiAreaHeight - _helpWindow.height;
+  // var y = mainAreaTop();
+  var rect = new Rectangle(0, 0, uiAreaWidth, height);
 
-  _saveFileList = new Window_SavefileList(0, y, width, height);
+  _saveFileList = new Window_SavefileList(rect);
   _saveFileList.setHandler('ok', onSaveFileLoad);
   _saveFileList.setHandler('cancel', popScene);
-  _saveFileList.select(0);
+  _saveFileList.setMode('load', GameSystem.isAutosaveEnabled());
+  _saveFileList.selectSavefile(DataManager.latestSavefileId());
   _saveFileList.setTopRow(0 - 2);
   _helpWindow.setText('Load a save file');
   addWindow(_saveFileList);
@@ -142,17 +163,18 @@ class Scene_Chapters extends Scene_MenuBase {
 
  public function onSaveFileLoad() {
   var savefileId = _saveFileList.index();
-  if (DataManager.loadGame(savefileId)) {
+
+  DataManager.loadGame(savefileId).then(d -> {
    SoundManager.playLoad();
    _loadSuccess = true;
    _saveFileList.deactivate();
    _saveFileList.close();
    _helpWindow.setText(Params.helpWindowTerm);
    _chapterSelectWindow.refresh();
-  } else {
+  }).catchError(err -> {
    _saveFileList.activate();
    SoundManager.playBuzzer();
-  }
+  });
  }
 
  public function onChapterSelect() {

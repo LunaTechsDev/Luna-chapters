@@ -1,28 +1,31 @@
 package windows;
 
+import rm.core.Rectangle;
 import rm.core.Sprite;
 import rm.windows.Window_Base;
-// import rm.managers.ImageManager;
+import rm.managers.ImageManager;
+import rm.Globals.GameSystem;
 import types.Chapter;
 
 /**
  * @TODO - Load image data using the new MZ codebase
  */
 class Window_ChapterThumbnail extends Window_Base {
- private var _chapter: Chapter = null;
- private var _thumbnail: Sprite = null;
+ private var _chapter: Chapter;
+ private var _thumbnail: Sprite;
 
- public function new(x: Int, y: Int, width: Int, height: Int) {
-  super(x, y, width, height);
-  super.initialize(x, y, width, height);
+ public function new(rect: Rectangle) {
+  super(rect);
+  super.initialize(rect);
   _chapter = null;
   createThumbnail();
  }
 
  public function createThumbnail() {
+  var padding = GameSystem.windowPadding();
   _thumbnail = new Sprite();
-  _thumbnail.x = 0 + standardPadding();
-  _thumbnail.y = 0 + standardPadding();
+  _thumbnail.x = 0 + padding;
+  _thumbnail.y = 0 + padding;
   _thumbnail.width = width / 2;
   _thumbnail.height = height / 2;
   addChild(_thumbnail);
@@ -45,13 +48,11 @@ class Window_ChapterThumbnail extends Window_Base {
 
  public function refresh() {
   if (_chapter != null && _chapter.thumbnail != null) {
-  /**
-   * @TODO Use loadBitmapFromUrl when LunaTea is ready
-   * 
-    * _thumbnail.bitmap = ImageManager.loadBitmapFromUrl(_chapter.thumbnail);
-   */
+    var path = 'img/${_chapter.thumbnail}.png';
+   _thumbnail.bitmap = ImageManager.loadBitmapFromUrl(path);
    _thumbnail.bitmap.addLoadListener((bitmap) -> {
-    _thumbnail.width = (width - standardPadding() * 2);
+    var padding = GameSystem.windowPadding();
+    _thumbnail.width = (width - padding * 2);
    });
   }
  }
