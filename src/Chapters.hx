@@ -1,5 +1,8 @@
 package;
 
+import types.LockCommand;
+import scenes.Scene_Chapters;
+import rm.managers.SceneManager;
 import rm.managers.StorageManager;
 import overrides.DataManager;
 import pixi.interaction.EventEmitter;
@@ -21,8 +24,27 @@ class Chapters {
   Emitter.on('game-saved', (savename: String) -> {
    StorageManager.saveObject(savename, Store);
   });
+  registerCommands();
   DataManager.patch();
   SceneTitle.patch();
   TitleCommand.patch();
+ }
+ 
+ public static function registerCommands() {
+  var pluginName: String = 'Luna_Chapters';
+
+  PluginManager.registerCommand(pluginName, 'lock', (args) -> {
+   var userInput: LockCommand = utils.Parse.parseParameters(args);
+   Chapters.Store.lockChapter(userInput.chapterId);
+  });
+
+  PluginManager.registerCommand(pluginName, 'unlock', (args) -> {
+   var userInput: LockCommand = utils.Parse.parseParameters(args);
+   Chapters.Store.unlockChapter(userInput.chapterId);
+  });
+
+  PluginManager.registerCommand(pluginName, 'openScene', (_) -> {
+   SceneManager.push(Scene_Chapters);
+  });
  }
 }

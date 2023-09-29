@@ -16,6 +16,12 @@
       "webRoot": "${workspaceRoot}/game/",
       "port": 9222,
       // "sourceMaps": true
+    },
+    {
+      "name": "Haxe Interpreter",
+      "type": "haxe-eval",
+      "request": "launch",
+      "args": ["compile.hxml", "--interp"]
     }
   ]
 }

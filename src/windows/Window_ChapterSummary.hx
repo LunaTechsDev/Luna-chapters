@@ -47,7 +47,7 @@ class Window_ChapterSummary extends Window_Base {
  }
 
  public function drawChapterSummary() {
-  drawTextEx(_chapter.summary, 0, 45, contents.width);
+  drawTextEx(_chapter.summary, 0, 45, contents.width - 20);
   this.resetFontSettings();
  }
 }

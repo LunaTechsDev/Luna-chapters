@@ -2,6 +2,7 @@
  * @plugindesc A chapter selection system for your games
  * <Luna_Chapters>
  *
+ * @target MZ MV
  * @author LunaTechs | inc0der
  * @url https://lunatechs.dev/plugins/luna-chapters/
  *
@@ -59,6 +60,30 @@
  * @type string
  * @desc The text to use as the command's name on the title scene's command window
  * @default Chapter Select
+ *
+ * -- Plugin Commands --
+ *
+ * @command openScene
+ * @text Open Scene
+ * @desc Opens the chapter selection scene.
+ * 
+ * @command lock
+ * @text Lock
+ * @desc Locks a chapter from being accessed.
+ * @arg chapterId
+ * @text Chapter ID
+ * @desc The chapter by its ID you would like to lock.
+ * @type number
+ * @default true
+ * 
+ * @command unlock
+ * @text Unlock
+ * @desc Unlocks a chapter so it can be accessed.
+ * @arg chapterId
+ * @text Chapter ID
+ * @desc The chapter by its ID you would like to unlock.
+ * @type number
+ * @default true
  *
  * @help
 --------------------------------------------------------------------------------

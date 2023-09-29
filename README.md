@@ -5,3 +5,9 @@ This plugin provides the user the option of creating chapters for their game. Ea
 ## Reporting Bugs
 
 If you find any bugs or compatibility issues, feel free to fill out our [bug report form](https://lunatechs.dev/report-bug/)
+
+TODO
+
+Chapters always show as disabled
+Unlocking chapters don't appear to work.
+Add a window padding parameter

@@ -62,13 +62,16 @@ class Window_ChapterList extends Window_Selectable {
   var chapter: Chapter = this._data[index];
   if (chapter != null) {
    var rect: Rectangle = this.itemRect(index);
-   rect.width -= 8;
+  //  rect.width -= 8;
+   rect.y += 5;
+   rect.x += 5;
    changePaintOpacity(this.isOkEnabled());
    makeFontBigger();
    drawText(chapter.name, Math.round(rect.x), Math.round(rect.y), Math.round(rect.width), 'left');
    drawTextRect(chapter.name, rect);
    makeFontSmaller();
-   drawTextEx(chapter.description, Math.round(rect.x), Math.round(rect.y + 50), contents.width);
+   var width = drawTextEx(chapter.description, Math.round(rect.x), Math.round(rect.y + 50), rect.width);
+   trace(width);
   }
  }
 }
