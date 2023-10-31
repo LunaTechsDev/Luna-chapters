@@ -1,15 +1,17 @@
 package windows;
 
+import rm.Globals.GameSystem;
+import rm.core.Rectangle;
 import rm.windows.Window_Base;
 import types.Chapter;
 import Chapters.Params;
 
 class Window_ChapterSummary extends Window_Base {
- private var _chapter: Chapter = null;
+ private var _chapter: Chapter;
 
- public function new(x: Int, y: Int, width: Int, height: Int) {
-  super(x, y, width, height);
-  super.initialize(x, y, width, height);
+ public function new(rect: Rectangle) {
+  super(rect);
+  super.initialize(rect);
  }
 
  public function setChapter(chapter) {
@@ -36,15 +38,16 @@ class Window_ChapterSummary extends Window_Base {
  }
 
  public function drawTitle() {
+  var padding = GameSystem.windowPadding();
   var width: Int = Std.int(width);
-  var textWidth = Std.int(width - standardPadding());
+  var textWidth = Std.int(width - padding);
 
   this.drawText(Params.summaryTitle, 0, 0, textWidth, 'center');
   this.contents.fillRect(0, 35, width, 5, Params.horizontalLineColor);
  }
 
  public function drawChapterSummary() {
-  drawTextEx(_chapter.summary, 0, 45);
+  drawTextEx(_chapter.summary, 0, 45, contents.width - 20);
   this.resetFontSettings();
  }
 }

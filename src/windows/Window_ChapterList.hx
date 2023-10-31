@@ -11,25 +11,25 @@ import Chapters.Params;
  * I think its best to use the new StoragManager in MZ to store and load
  */
 class Window_ChapterList extends Window_Selectable {
- private var _page: Int = 0;
- private var _data: Array<Dynamic> = [];
- private var _thumbnails: Array<Bitmap> = [];
+ private var _page: Int;
+ private var _data: Array<Dynamic>;
+ private var _thumbnails: Array<Bitmap>;
 
- public function new(x: Int, y: Int, width: Int, height: Int) {
-  super(x, y, width, height);
-  // contents.fontSize = Params.chapterWindow.fontSize
+ public function new(rect: Rectangle) {
+  super(rect);
+  contents.fontSize = Params.chapterWindow.fontSize;
   refresh();
  }
 
  public override function refresh() {
+  makeItemList();
   super.refresh();
   contents.clear();
-  makeItemList();
   drawAllItems();
  }
 
  public override function itemHeight(): Float {
-  return 10; // @todo replace with Params.chapterWindow.itemHeight
+  return Params.chapterWindow.itemHeight;
  }
 
  public function item(): Dynamic {
@@ -41,11 +41,11 @@ class Window_ChapterList extends Window_Selectable {
  }
 
  public override function isOkEnabled(): Bool {
-  return item().lockState;
+  return item() && item().lockState;
  }
 
  public function makeItemList() {
-  // this._data = GameSystem.chapters;
+  this._data = Chapters.Store.chapters;
  }
 
  public override function maxItems() {
@@ -62,13 +62,16 @@ class Window_ChapterList extends Window_Selectable {
   var chapter: Chapter = this._data[index];
   if (chapter != null) {
    var rect: Rectangle = this.itemRect(index);
-   rect.width -= this.textPadding();
+  //  rect.width -= 8;
+   rect.y += 5;
+   rect.x += 5;
    changePaintOpacity(this.isOkEnabled());
    makeFontBigger();
    drawText(chapter.name, Math.round(rect.x), Math.round(rect.y), Math.round(rect.width), 'left');
    drawTextRect(chapter.name, rect);
    makeFontSmaller();
-   drawTextEx(chapter.description, Math.round(rect.x), Math.round(rect.y + 50));
+   var width = drawTextEx(chapter.description, Math.round(rect.x), Math.round(rect.y + 50), rect.width);
+   trace(width);
   }
  }
 }
